@@ -1,10 +1,10 @@
-import React , {useState} from 'react'
+import {useState} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 
-export default function BookingWidg({place}) {
+export default function BookingWidg(place) {
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
     const [numberOfGuests, setNumberOfGuests] = useState(1);

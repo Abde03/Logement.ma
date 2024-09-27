@@ -64,8 +64,8 @@ export default function PhotosUp ({addedPhotos,onChange}) {
                 ))
               } */}
 
-            {addedPhotos.length > 0 && addedPhotos.map(link => (
-                  <div className='h-32 flex relative'>
+            {addedPhotos.length > 0 && addedPhotos.map((link,key) => (
+                  <div key={key} className='h-32 flex relative'>
                     <Image src={link} className='w-full h-32 object-cover rounded-2xl' />
                     <button onClick={(ev) => removePhoto(ev ,link)} className='cursor-pointer absolute bottom-1 right-1 text-white bg-black bg-opacity-40 rounded-2xl py-2 px-3'>
                       <CiTrash />

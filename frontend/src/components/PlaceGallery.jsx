@@ -18,8 +18,8 @@ export default function PlaceGallery ({place}) {
                 Close photos
               </button>
             </div>
-            {place?.images?.length > 0 && place.images.map(photo => (
-              <div>
+            {place?.images?.length > 0 && place.images.map((photo , key) => (
+              <div key={key}>
                 <Image src={photo} alt=""/>
               </div>
             ))}
