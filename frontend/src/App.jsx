@@ -12,9 +12,8 @@ import BookingsPage from "./pages/BookingsPage.jsx"
 import BookingPage from "./pages/BookingPage.jsx"
 
 function App() {
-
   
-  axios.defaults.baseURL = 'http://127.0.0.1:4000/' ;
+  axios.defaults.baseURL = 'https://logement-ma.onrender.com/' ;
   axios.defaults.withXSRFToken = true;
   
 

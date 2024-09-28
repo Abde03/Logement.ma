@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <header className='flex justify-between'>
       <a href="/" className='flex gap-1 items-center'>
-        <img className='w-8' src='../../public/morocco.png' />
+        <img className='w-8' src='/morocco.png' />
         <span className='font-bold text-xl text-red-500'>Logement<span className='text-green-500'>.ma</span></span>
       </a>
 
