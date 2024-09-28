@@ -11,9 +11,8 @@ export default function Footer() {
                 <div>
                     <h3 className="font-bold text-xl">Contact</h3>
                     <p className="text-gray-800">Azzaoui03dev@gmail.com</p>
-                    <p className="text-gray-800"><a href="">Github</a></p>
-                </div>
-                
+                    <p className="text-gray-800"><a href="https://github.com/Abde03">Github</a></p>
+                </div>         
             </div>
         </footer>
     )
