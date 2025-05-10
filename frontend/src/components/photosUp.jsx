@@ -15,18 +15,18 @@ PhotosUp.defaultProps = {
   addedPhotos: [],
 };
 
-
-
 export default function PhotosUp ({addedPhotos,onChange}) {
+  
   const [photoLink , setPhotoLink] = useState('');
 
   const imageLink = async(ev) => {
     ev.preventDefault();
     try {
-      const {data} = await axios.post('/imageUploader', {link: photoLink,})
+      
+      const {data} = await axios.post('/upload/by-link', {link: photoLink,})
       if(data.success) {
       onChange(prev => {
-        return [...prev, data.filename];
+        return [...prev, data.url];
       });
       setPhotoLink('');
       toast.success(data.message);
@@ -40,45 +40,45 @@ export default function PhotosUp ({addedPhotos,onChange}) {
     }    
   }
     
-  const  download = async(ev) => {
+  const download = async(ev) => {
     const files = ev.target.files;
     const formData = new FormData();
+
     for (let i = 0; i < files.length; i++) {
       formData.append('photos', files[i]);
     }
     try{
-      const {data} = await axios.post('/download', formData, {
+      const {data} = await axios.post('/upload', formData,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      });
-      const {success, message, uploadedFiles} = data;
-      if(success) {
-        onChange(prev => {
-          return [...prev, ...uploadedFiles];
-        });
+      }
+      )
+      const { success, message, uploadedFiles } = data;
+      if (success) {
+        const urls = uploadedFiles.map(file => file.url);
+        onChange(prev => [...prev, ...urls]);
         toast.success(message);
-      }
-      else {
+      } else {
         toast.error(message);
-      }
-    }catch (error) {
+      }   
+    } catch (error) {
       toast.error(error.message);
     }
+    
   }
-      
 
-      function removePhoto (ev ,link) {
-        ev.preventDefault();
-        onChange([...addedPhotos.filter(photo => photo !== link)]);
-      }
+    
+  const removePhoto = (ev ,link) => {
+    ev.preventDefault();
+    onChange([...addedPhotos.filter(photo => photo !== link)]);     
+  }
 
-      function mainPhoto (ev, link) {
-        ev.preventDefault();
-        const noSelected = addedPhotos.filter(photo => photo !== link);
-        const newPhotos = [link, ...noSelected];
-        onChange(newPhotos);
-      }
+  const mainPhoto = (ev, link) => {
+    ev.preventDefault();
+    const reordered = [link, ...addedPhotos.filter(photo => photo !== link)];
+    onChange(reordered);
+  }
 
   return (
     <>

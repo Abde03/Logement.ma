@@ -11,7 +11,7 @@ const createPlace = async (req, res) => {
         }
         const { 
             title, address, description, perks ,
-            extraInfo, checkIn, checkOut, maxGuests, price, addedPhotos, type
+            extraInfo, checkIn, checkOut, maxGuests, price, images, type
         } = req.body;
 
         const checkInDate = new Date(checkIn);
@@ -24,14 +24,14 @@ const createPlace = async (req, res) => {
             return res.json({success:false, message: 'Max guests must be greater than 0' });
         }
         
-        if (!title || !address || !description || !checkIn || !checkOut || !maxGuests || !price || !addedPhotos) {
+        if (!title || !address || !description || !checkIn || !checkOut || !maxGuests || !price || !images || !type) {
             return res.json({success:false, message: 'All fields with * are required' });
         }
         if (addedPhotos.length === 0) {
             return res.json({success:false, message: 'At least one photo is required' });
         }
         const newPlace = await PlaceModel.create({
-            title, address, description, perks, extraInfo, checkIn, checkOut, maxGuests, price, type, images:addedPhotos, owner:userId,
+            title, address, description, perks, extraInfo, checkIn, checkOut, maxGuests, price, type, images, owner:userId,
         });
         res.json({success:true, message:'Place created successfully', place:newPlace});
 

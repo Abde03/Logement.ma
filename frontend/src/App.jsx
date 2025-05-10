@@ -15,7 +15,6 @@ import {ToastContainer} from 'react-toastify';
 
 function App() {
   
-  //axios.defaults.baseURL = 'https://logement-ma.onrender.com/' ;
   axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
   axios.defaults.withXSRFToken = true;
   axios.defaults.withCredentials = true;

@@ -13,7 +13,7 @@ export default function PlaceFormPage() {
     const {id} = useParams();
     const [title,setTitle] = useState('');
     const [address,setAddress] = useState('');
-    const [addedPhotos,setAddedPhotos] = useState([]);
+    const [images,setImages] = useState([]);
     const [description,setDescription] = useState('');
     const [type,setType] = useState('apartment');
     const [perks,setPerks] = useState([]);
@@ -32,7 +32,7 @@ export default function PlaceFormPage() {
           const place = data.place;
           setTitle(place.title);
           setAddress(place.address);
-          setAddedPhotos(place.images);
+          setImages(place.images);
           setDescription(place.description);
           setPerks(place.perks);
           setExtraInfo(place.extraInfo);
@@ -52,9 +52,9 @@ export default function PlaceFormPage() {
       try{
         e.preventDefault();
         const placeData = {
-          title, address, description, perks, extraInfo, checkIn, checkOut, maxGuests, price, addedPhotos, type 
+          title, address, description, perks, extraInfo, checkIn, checkOut, maxGuests, price, images, type 
         };
-        if(!title || !address || !description || !perks || !extraInfo || !checkIn || !checkOut || !maxGuests || !price) {
+        if(!title || !address || !description || !perks || !extraInfo || !checkIn || !checkOut || !maxGuests || !price || !images || !type) {
           toast.error('Please fill all the fields');
           return;
         }
@@ -63,7 +63,7 @@ export default function PlaceFormPage() {
           return;
         }
         if(id) {
-          const {data} =  await axios.put('/place/update/'+id , {...placeData } );
+          const {data} =  await axios.put('/place/update/'+id , {...placeData} );
           data.success ? toast.success(data.message) && navigate('/profile/places') : toast.error(data.message);
         }else{
           const {data} = await axios.post('/place/new', placeData);
@@ -87,14 +87,14 @@ export default function PlaceFormPage() {
               onChange={(e) => setAddress(e.target.value)}
               placeholder='e.g. N°20 Hay Ryad Rabat' />
             <h2 className='text-xl'>Photos</h2>
-              <PhotosUp addedPhotos={addedPhotos} onChange={setAddedPhotos} />
+              <PhotosUp addedPhotos={images} onChange={setImages} />
             <h2 className='text-xl mt-4'>Description</h2>
             <textarea value={description} 
               onChange={(e) => setDescription(e.target.value)}
               placeholder='Description of your place'
             />
             <h2 className='text-2xl mt-4'>Type of accommodation</h2>
-            <p className='text-gray-500 text-sm'>Select the equipment you have in your accommodation</p>
+            <p className='text-gray-500 text-sm'>Select the type of your accommodation</p>
             <select name="type" id="type" className='mt-2 border border-gray-600 p-2 rounded-md' value={type} onChange={(e) => setType(e.target.value)}>
               <option value="apartment">Apartment</option>
               <option value="house">House</option>

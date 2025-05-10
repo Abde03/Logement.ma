@@ -32,7 +32,7 @@ export default function IndexPage() {
       return 0;
     }) : [];
 
-  if (filteredData.length === 0) {
+  if (filteredData.length === 0 && filteredData !== undefined) {
     return (
       <div className='text-gray-500 mt-10 flex flex-col grow items-center justify-center'>
         <h2 className='text-2xl'>No accommodation found</h2>
