@@ -241,13 +241,13 @@ const sendResetPasswordOtp = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   
   const {email, otp, newPassword} = req.body;
-  if(!email || !otp || !newPassword) return next(errorHandling(404, 'Missing Data'));
+  if(!email || !otp || !newPassword) return res.json({success: false, message: 'Missing data'});
   
   try{
     const user = await UserModel.findOne({email});
     if(!user) return next(errorHandling(404, 'Invalid email'));
-    if(user.resetPasswordOTP !== otp || user.resetPasswordOTP === '') return next(errorHandling(404, 'Invalid OTP'));
-    if(user.resetPasswordOTPExpireAt < Date.now()) return next(errorHandling(404, 'OTP expired'));
+    if(user.resetPasswordOTP !== otp || user.resetPasswordOTP === '') return res.json({success: false, message: 'Otp invalid'});;
+    if(user.resetPasswordOTPExpireAt < Date.now()) return res.json({success: false, message: 'Otp Expired'});;
     user.password = bcryptjs.hashSync(newPassword, 10);
     user.resetPasswordOTP = '';
     user.resetPasswordOTPExpireAt = 0;
