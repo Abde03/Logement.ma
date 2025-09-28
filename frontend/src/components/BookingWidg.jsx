@@ -56,13 +56,13 @@ export default function BookingWidg({place}) {
           toast.error(data.message);
         }
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error.response?.data?.message || error.message);
       }
    
     }
 
   return (
-    <div className="bg-white shadow p-4 rounded-2xl">
+    <div className="bg-white dark:bg-gray-800 shadow p-4 rounded-2xl">
       <div className="text-2xl text-center">
         <span className="font-bold">{place.price}</span> DH / night
       </div>

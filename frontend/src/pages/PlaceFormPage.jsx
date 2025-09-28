@@ -27,22 +27,26 @@ export default function PlaceFormPage() {
     useEffect(() => {
       if(!id) return;
       const fetchPlace = async () => {
-        const {data} = await axios.get('/place/'+id);
-        if(data.success) {
-          const place = data.place;
-          setTitle(place.title);
-          setAddress(place.address);
-          setImages(place.images);
-          setDescription(place.description);
-          setPerks(place.perks);
-          setExtraInfo(place.extraInfo);
-          setCheckIn(place.checkIn);
-          setCheckOut(place.checkOut);
-          setMaxGuests(place.maxGuests);
-          setPrice(place.price);
-          setType(place.type);
-        }else{
-          toast.error(data.message);
+        try {
+          const {data} = await axios.get('/place/'+id);
+          if(data.success) {
+            const place = data.data?.place || data.place;
+            setTitle(place.title);
+            setAddress(place.address);
+            setImages(place.images);
+            setDescription(place.description);
+            setPerks(place.perks);
+            setExtraInfo(place.extraInfo);
+            setCheckIn(place.checkIn);
+            setCheckOut(place.checkOut);
+            setMaxGuests(place.maxGuests);
+            setPrice(place.price);
+            setType(place.type);
+          }else{
+            toast.error(data.message);
+          }
+        } catch (error) {
+          toast.error(error.response?.data?.message || error.message);
         }
       };
       fetchPlace();
@@ -94,8 +98,8 @@ export default function PlaceFormPage() {
               placeholder='Description of your place'
             />
             <h2 className='text-2xl mt-4'>Type of accommodation</h2>
-            <p className='text-gray-500 text-sm'>Select the type of your accommodation</p>
-            <select name="type" id="type" className='mt-2 border border-gray-600 p-2 rounded-md' value={type} onChange={(e) => setType(e.target.value)}>
+            <p className='text-gray-500 dark:text-gray-400 text-sm'>Select the type of your accommodation</p>
+            <select name="type" id="type" className='mt-2 border border-gray-600 dark:border-gray-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded-md' value={type} onChange={(e) => setType(e.target.value)}>
               <option value="apartment">Apartment</option>
               <option value="house">House</option>
               <option value="room">Room</option>

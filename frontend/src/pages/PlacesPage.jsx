@@ -17,12 +17,12 @@ export default function PlacesPage() {
       try {
         const {data} = await axios.post('/place/user');
         if (data.success) {
-          setPlaces(data.places)
+          setPlaces(data.data?.places || data.places || [])
         } else {
           toast.error(data.message);
         }
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error.response?.data?.message || error.message);
       }
     };
     fetchPlaces();
@@ -67,9 +67,9 @@ export default function PlacesPage() {
               Add a new place
             </Link>
         </div>
-        <div className=''>
+        <div className='flex flex-col gap-4 p-4'>
           {places.length > 0 && places.map((place, index) => (
-            <div key={index} to={'/profile/places/'+place._id} className='flex flex-col md:flex-row justify-between cursor-pointer md:items-center bg-slate-100 p-4 rounded-2xl gap-5'>
+            <div key={index} to={'/profile/places/'+place._id} className='flex flex-col md:flex-row justify-between cursor-pointer md:items-center bg-slate-100 dark:bg-slate-800 p-4 rounded-2xl gap-5'>
               <div className='flex w-auto h-32 items-center bg-gray-300 shrink-0 rounded-2xl overflow-hidden md:w-48'>
                 {place.images.length > 0 && (
                   <Image className = "object-cover" src={place.images[0]} alt={place.title} />

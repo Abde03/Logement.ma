@@ -20,8 +20,8 @@ export default function BookingsPage() {
             try {
                 const endpoint = activeTab === 'owner' ? '/booking/owner' : '/booking/user';
                 const {data} = await axios.post(endpoint);
-                const {bookings} = data;
                 if(data.success) {
+                    const bookings = data.data?.bookings || data.bookings || [];
                     setBookings(bookings);
                     toast.success(data.message);
                 }else{
@@ -88,8 +88,8 @@ export default function BookingsPage() {
                             <h2 className="text-xl">{place.title}</h2>
                             {
                                 activeTab === 'owner' ? (
-                                    <div className="text-sm text-gray-500 flex flex-col gap-1">
-                                        <p><span className="font-bold text-lg">{name}</span> has reserved</p>
+                                    <div className="text-sm text-gray-500 dark:text-gray-400 flex flex-col gap-1">
+                                        <p><span className="font-bold text-lg text-gray-900 dark:text-gray-100">{name}</span> has reserved</p>
                                         <p className='text-lg inline-flex items-center space-x-1'> <TbPhone/> <span>{phone}</span></p>
                                     </div>
                                 ) : (

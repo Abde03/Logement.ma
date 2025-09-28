@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
         try{
             const {data} = await axios.get("/user/data")
             if(data.success){
-                setUser(data.userData)
+                setUser(data.data.user)
                 setIsLoggedIn(true)
             }
             else {
@@ -41,7 +41,9 @@ export const UserProvider = ({ children }) => {
                 setIsLoggedIn(false)
             }
         }catch (error) {
-            console.log(error.message)
+            console.log(error.response?.data?.message || error.message)
+            setUser(null)
+            setIsLoggedIn(false)
         }
     }
 

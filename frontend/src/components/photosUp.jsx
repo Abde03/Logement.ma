@@ -26,7 +26,7 @@ export default function PhotosUp ({addedPhotos,onChange}) {
       const {data} = await axios.post('/upload/by-link', {link: photoLink,})
       if(data.success) {
       onChange(prev => {
-        return [...prev, data.url];
+        return [...prev, data.data.url];
       });
       setPhotoLink('');
       toast.success(data.message);
@@ -36,7 +36,7 @@ export default function PhotosUp ({addedPhotos,onChange}) {
       }
     }
     catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message || error.message);
     }    
   }
     
@@ -54,8 +54,9 @@ export default function PhotosUp ({addedPhotos,onChange}) {
         }
       }
       )
-      const { success, message, uploadedFiles } = data;
+      const { success, message, data: responseData } = data;
       if (success) {
+        const uploadedFiles = responseData?.uploadedFiles || [];
         const urls = uploadedFiles.map(file => file.url);
         onChange(prev => [...prev, ...urls]);
         toast.success(message);
@@ -63,7 +64,7 @@ export default function PhotosUp ({addedPhotos,onChange}) {
         toast.error(message);
       }   
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
     
   }

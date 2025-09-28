@@ -18,8 +18,8 @@ export default function BookingPage() {
         try {
           if(!id) return;
           const {data} = await axios.get('/booking/'+id);
-          const {booking} = data;
           if (data.success) {
+            const booking = data.data?.booking || data.booking;
             setBooking(booking);
             setStatus(booking.status);
           }else{

@@ -28,7 +28,7 @@ export default function RegisterPage() {
           toast.success(data.message);
         }
       }catch(error) {
-        toast.error(error.message);
+        toast.error(error.response?.data?.message || error.message);
         }
     }
 
@@ -53,8 +53,8 @@ export default function RegisterPage() {
                  onChange={ev => setPassword(ev.target.value)}
              />
           <button className="primary" type='submit'>Register</button>
-          <div className="text-center py-2 text-gray-500">
-            Already have an account? <Link className="underline text-black" to={'/login'}>Log in</Link>
+          <div className="text-center py-2 text-gray-500 dark:text-gray-400">
+            Already have an account? <Link className="underline text-black dark:text-white hover:text-red-500" to={'/login'}>Log in</Link>
           </div>
         </form>
       </div>

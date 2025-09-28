@@ -12,20 +12,32 @@ import BookingsPage from "./pages/BookingsPage.jsx"
 import BookingPage from "./pages/BookingPage.jsx"
 import ResetPassword from "./pages/ResetPassword.jsx"
 import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ErrorBoundary from "./components/ErrorBoundary.jsx"
 
 function App() {
   
   axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
-  axios.defaults.withXSRFToken = true;
   axios.defaults.withCredentials = true;
   
 
   return (
-    <>
-      <ToastContainer position="bottom-center" />
+    <ErrorBoundary>
+      <ToastContainer 
+        position="bottom-center" 
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <Routes>
         <Route path="/" element={<Layout />} >
-          <Route index  element={<IndexPage />} />
+          <Route index element={<IndexPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ResetPassword />} />
@@ -38,7 +50,7 @@ function App() {
           <Route path="/place/:id" element={<PlacePage />} />
         </Route>
       </Routes>
-    </>
+    </ErrorBoundary>
   )
 }
 

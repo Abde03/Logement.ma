@@ -124,7 +124,7 @@ export default function ProfilePage() {
                   </button>
                 ) : (
                   <>
-                  <p className='text-start text-sm text-gray-500'>
+                  <p className='text-start text-sm text-gray-500 dark:text-gray-400'>
                     We have sent a verification code to your email address. Please enter the code below to verify your account.
                   </p>
                   <div className='flex justify-between gap-2' onPaste={handlePaste}>
